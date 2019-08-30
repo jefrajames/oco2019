@@ -16,8 +16,8 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <javaee.version>8.0</javaee.version>
         <microprofile.version>2.1</microprofile.version>
-        <microprofile.extension.version>1.0.5</microprofile.extension.version>
         <lombok.version>1.18.4</lombok.version>
+        <tomee.version>8.0.0-M3</tomee.version>
     </properties>
     
     <dependencies>
@@ -38,19 +38,31 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.microprofile-ext.health-ext</groupId>
-            <artifactId>health-ui</artifactId>
-            <version>${microprofile.extension.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        
+        </dependency>    
     </dependencies>
     
     <build>
         <finalName>smartbank</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomee.maven</groupId>
+                <artifactId>tomee-maven-plugin</artifactId>
+                <version>${tomee.version}</version>
+                <configuration>
+                    <tomeeClassifier>microprofile</tomeeClassifier>
+                    <context>smartbank</context>
+                    <tomeeHttpPort>8082</tomeeHttpPort>
+                    <useBinaries>true</useBinaries>
+                    <args>-Xshareclasses:name=tomeebank -Xtune:virtualized</args>
+                    <libs>
+                        <lib>remove:hsqldb</lib>
+                        <lib>org.hsqldb:hsqldb:2.5.0</lib>
+                        <lib>remove:myfaces</lib>
+                        <lib>remove:taglibs</lib>
+                    </libs>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>
