@@ -4,8 +4,8 @@ This project is a demo for Oracle Code One 2019.
 
 It simulates a simplified payment system based on 3 services:
 
-- **EasyPay**: a payment systems that concentrates multiple popint of sales for a gievn merchant, run on port 8080 with Payara Server,
-- **SmartBank**: the Acquirer bank in charge of calling the card-scheme network when a certain amount is exceeded, run on port 8081 with Payara Micro,
+- **EasyPay**: a payment system that concentrates multiple point of sales for a given merchant, run on port 8080 with Payara Micro,
+- **SmartBank**: the Acquiring bank in charge of calling the card-scheme network when a certain amount is exceeded, run on port 8081 with TomEE,
 - **Merchant Back Office**: where the merchant can vizualise its payments through a GraphQL API, run on port 8082 with KumuluzEE.
 
 HSQLDB is used as database.
@@ -27,8 +27,3 @@ The following MP specifications are illustrated:
 - Health,
 - OpenAPI,
 - RestClient.
-
-Next steps:
-
-- OpenTracing,
-- Metrics.
