@@ -26,15 +26,19 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 @DataSourceDefinition(
-  name = "java:app/jdbc/smartbank", 
-  className = "org.hsqldb.jdbcDriver", 
-  url = "jdbc:hsqldb:hsql://localhost/oco",
-  user = "sa",
-  password = "",
-  maxPoolSize = 3,
-  minPoolSize = 5,
-  maxStatements = 100
-  )
+        name = "java:app/jdbc/smartbank",
+        className = "org.hsqldb.jdbcDriver",
+        url = "jdbc:hsqldb:hsql://localhost/oco",
+        user = "sa",
+        password = "",
+        initialPoolSize = 3,
+        properties = {
+            "poolPreparedStatements = true", 
+            "testOnBorrow = true", 
+            "testOnReturn = false", 
+            "validationQuery =select 1 from INFORMATION_SCHEMA.SYSTEM_USERS"
+        }
+)
 
 public class DataSourceConfiguration {
 }
