@@ -1,6 +1,9 @@
 #! /bin/bash
 
-. setEnv.sh
+clear 
+
+HSQLDB_HOME=~/javatools/hsqldb-2.5.0
+DATA_HOME=~/javadev/data/hsqldb
 
 if [ $# -eq 1 ]
 then

@@ -1,27 +1,41 @@
 #! /bin/bash
 
+
 clear
 
-. ./setEnv.sh
-
 PORT=8082
+TOMEE_HOME=~/javatools/apache-tomee-microprofile-8.0.0-M3-oc1
+SMARTBANK_WAR_FILE=~/javadev/demo/oco2019/smartbank/target/smartbank.war
 
-echo "Starting SmartBank with Payara Micro. Hollow jar deployment. Port $PORT"
+echo "Starting SmartBank with TomEE on port $PORT."
 
-echo "2 involved files:"
+# TomEE cleanup
+rm -rf $TOMEE_HOME/logs
+mkdir $TOMEE_HOME/logs
+rm -rf $TOMEE_HOME/webapps
+mkdir $TOMEE_HOME/webapps
+
+echo "Thin war deployment, 2 files involved:"
 du -h $SMARTBANK_WAR_FILE
-du -h $PAYARA_MICRO_HOME/payara-micro-5.192.jar
+du -sh $TOMEE_HOME
 
-echo "Running SmartBank on port $PORT:"
+echo ""
+echo ""
+echo ""
 
-# -Xshareclasses:name=smartbank -Xquickstart -Xmx250m -Xms250m
+# Deploy the webapp
+cp $SMARTBANK_WAR_FILE $TOMEE_HOME/webapps
 
-CMD="java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED 
--jar $PAYARA_MICRO_HOME/payara-micro-5.192.jar
---noCluster --addJars $HSQLDB_HOME/lib/hsqldb.jar --port $PORT
---deploy $SMARTBANK_WAR_FILE"
+if [ -z $1 ]
+then
+	echo "Running TomEE without OpenJ9 shared classes"
+else
+	echo "Running TomEE with OpenJ9 shared classes"
+	export CATALINA_OPTS="-Xshareclasses:name=smartbank -Xtune:virtualized"
+fi
 
-echo "Running command:"
+CMD="$TOMEE_HOME/bin/catalina.sh run"
+
 echo $CMD
 
 echo "Type any key when ready"
