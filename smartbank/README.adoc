@@ -1,19 +1,27 @@
 = SmartBank
 
-SmartBank represents the gateway to the Acquirer Bank (the bank of the Merchant). It is in charge of delivering authorisations by calling the network card-scheme. The objective is to check the solvability of the card owner (the person doing the payment).
+SmartBank represents the gateway to the Acquiring Bank (the bank of the Merchant). It is in charge of delivering authorisations by calling the network card-scheme. The objective is to check the solvability of the card owner (the person doing the payment).
 
-It is called by the WebShop beyond a certain amount through a RETSful API.
+It is called by EasyPay beyond a certain amount through a RESTful API.
 
 For this demo, the processing is purposely made in a very basic way: 
 
-. below a configured amount: the authorization is delivered,
-. beyond it: the authorization is denied.
+. below a configured amount: the authorization is accepted,
+. beyond it: the authorization is refused.
+
+== Using TomEE
+
+It seems that TomEE integration does not work very well with NetBeans. A recommended approach is to use the TomEE maven plugin from a shell script. Its is defined and configured in pom.xml and can easyly bee used:[source,]
+----
+mvn tomee:run
+----
+which has the effect to download a customized TomEE version in the target directory and to run it with the deployed application.
 
 == Endpoints
 
-With Payara Micro the exposed port is 8082
+With TomEE the exposed port is 8082.
 
-The main endpoints are:
+The base URL is http://localhost:8082/smartbank/api/ for all the following endpoints:
 
 - */health* : get MP healthcheck information,
 - */openapi* : get RestFul API documentation,
