@@ -9,7 +9,7 @@ if [ $# -eq 1 ]
 then
 	echo "Removing existing data, type any key to confirm, CtrlC to exit"
 	read	
-	rm -rf $DATA_HOME/hsqldb 
+	rm -rf $DATA_HOME
 else
 	echo "Keeping existing data"
 fi
