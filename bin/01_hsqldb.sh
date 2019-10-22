@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# Nightly build for Oracle Code One demo (Dan Heidinga)
+export JAVA_HOME=~/javatools/jdk-11.0.5+7/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+
 clear 
 
 HSQLDB_HOME=~/javatools/hsqldb-2.5.0
@@ -15,5 +19,4 @@ else
 fi
 
 echo "Starting HSQL Database Server in verbose mode"
-
-java -cp $HSQLDB_HOME/lib/hsqldb.jar org.hsqldb.server.Server --silent false --database.0 $DATA_HOME/oco --dbname.0 oco
+java -Xshareclasses:name=hsql -cp $HSQLDB_HOME/lib/hsqldb.jar org.hsqldb.server.Server --silent false --database.0 $DATA_HOME/oco --dbname.0 oco

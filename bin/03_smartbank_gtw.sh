@@ -1,6 +1,10 @@
 #! /bin/bash
 
 
+# Nightly build for Oracle Code One demo (Dan Heidinga)
+export JAVA_HOME=~/javatools/jdk-11.0.5+7/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+
 clear
 
 PORT=8082
@@ -28,8 +32,11 @@ cp $SMARTBANK_WAR_FILE $TOMEE_HOME/webapps
 
 echo "Running TomEE with OpenJ9 shared classes"
 
-export CATALINA_OPTS="-Xshareclasses:name=smartbank -Xscmx64m"
-echo CATALINA_OPTS=$CATALINA_OPTS
+if [ -z $1 ]
+then
+	export CATALINA_OPTS="-Xshareclasses:name=smartbank -Xscmx64m"
+	echo CATALINA_OPTS=$CATALINA_OPTS
+fi
 
 CMD="$TOMEE_HOME/bin/catalina.sh run"
 
