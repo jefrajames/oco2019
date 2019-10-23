@@ -17,11 +17,14 @@ echo ""
 echo ""
 echo ""
 
-
+# OpenJ9 options
+#-Xshareclasses:name=easypay,noCheckURLTimestamps,readonly -Xscmx128m
+#-Xshareclasses:name=easypay -Xscmx128m
+#-Xshareclasses:name=easypay,bootClassesOnly -Xscmx128m
 
 echo "Running Payara Micro with OpenJ9 shared classes"
 CMD="java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED 
--Xshareclasses:name=easypay,bootClassesOnly -Xscmx128m
+-Xshareclasses:name=easypay,bootClassesOnly
 -jar $PAYARA_MICRO_HOME/payara-micro-5.193.jar
 --noCluster --addJars $HSQLDB_HOME/lib/hsqldb.jar --port $EASYPAY_PORT
 --deploy $EASYPAY_WAR_FILE"
